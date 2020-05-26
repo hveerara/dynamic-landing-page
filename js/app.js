@@ -3,6 +3,13 @@
  * and supporting functions to style the page
  */
 
+const elementsInNavBar = [
+  [ '#summary', 'The Quest', 'Link to Summary section' ],
+  [ '#featuredBlogs', 'Featured Blogs', 'Link to Featured Blogs section' ],
+  [ '#authorInfo', 'About', 'Link to About section' ],
+  [ '#subscribe', 'Subscribe', 'Link to Subscribe Form' ]
+];
+
 /**
  * Function to create an <li> element inside the <ul> element of the navigation bar
  */
@@ -21,10 +28,10 @@ const createLiElementForNav = () => {
 /**
  * Function to create an <a> element inside each of the <li> elements of the navigation bar
  */
-const createAHrefElementForNav = ( hrefTo, innerHTMLStr, attrObj ) => {
+const createAHrefElementForNav = ( aHrefElementAttrArr ) => {
   let aHrefElementForNav = document.createElement('a');
-  aHrefElementForNav.href = hrefTo;
-  aHrefElementForNav.innerHTML = innerHTMLStr;
+  aHrefElementForNav.href = aHrefElementAttrArr[0];
+  aHrefElementForNav.innerHTML = aHrefElementAttrArr[1];
   aHrefElementForNav.style.textDecoration = 'none';
   aHrefElementForNav.style.display = 'block';
   aHrefElementForNav.style.color = '#000';
@@ -36,10 +43,10 @@ const createAHrefElementForNav = ( hrefTo, innerHTMLStr, attrObj ) => {
     aHrefElementForNav.style.backgroundColor = '#BF9259';
   };
   aHrefElementForNav.onclick = () => {
-    const selectedElement = document.querySelector( hrefTo );
+    const selectedElement = document.querySelector( aHrefElementAttrArr[0] );
     selectedElement.style.backgroundColor = '#FACA9A';
   };
-  aHrefElementForNav.setAttribute( 'aria-label', attrObj['aria-label']);
+  aHrefElementForNav.setAttribute( 'aria-label', aHrefElementAttrArr[2] );
   return aHrefElementForNav;
 };
 
@@ -51,30 +58,14 @@ const createAHrefElementForNav = ( hrefTo, innerHTMLStr, attrObj ) => {
 const createDynamicNavbar = () => {
   const navbar = document.querySelector('nav');
   let ulElement = document.createElement('ul');
-  
-  let liElementSummary = createLiElementForNav();
-  const aHrefSummaryAriaLabel = { 'aria-label': 'Link to Summary section' };
-  const ahrefSummary = createAHrefElementForNav( '#summary', 'The Quest', aHrefSummaryAriaLabel );
-  liElementSummary.appendChild(ahrefSummary);
-  ulElement.appendChild(liElementSummary);
 
-  let liElementFeaturedBlogs = createLiElementForNav();
-  const aHrefFeaturedBlogsAriaLabel = { 'aria-label': 'Link to Featured Blogs section' };
-  let ahrefFeaturedBlogs = createAHrefElementForNav( '#featuredBlogs', 'Featured Blogs', aHrefFeaturedBlogsAriaLabel );
-  liElementFeaturedBlogs.appendChild(ahrefFeaturedBlogs);
-  ulElement.appendChild(liElementFeaturedBlogs);
-
-  let liElementAbout = createLiElementForNav();
-  const aHrefAboutAriaLabel = { 'aria-label': 'Link to About section' };
-  let ahrefAbout = createAHrefElementForNav( '#authorInfo', 'About', aHrefAboutAriaLabel );
-  liElementAbout.appendChild(ahrefAbout);
-  ulElement.appendChild(liElementAbout);
-
-  let liElementSubscribe = createLiElementForNav();
-  const aHrefSubscribeAriaLabel = { 'aria-label': 'Link to Subscribe Form' };
-  let ahrefSubscribe = createAHrefElementForNav( '#subscribe', 'Subscribe', aHrefSubscribeAriaLabel );
-  liElementSubscribe.appendChild(ahrefSubscribe);
-  ulElement.appendChild(liElementSubscribe);
+  for( let i=0; i<elementsInNavBar.length; i++ ) {
+    const liElement = createLiElementForNav();
+    const aHrefElementAttr = elementsInNavBar[i];
+    const ahrefElementInNavBar = createAHrefElementForNav( aHrefElementAttr );
+    liElement.appendChild( ahrefElementInNavBar );
+    ulElement.appendChild(liElement );
+  }
 
   navbar.appendChild(ulElement);
 };
@@ -83,9 +74,8 @@ const createDynamicNavbar = () => {
  * Function to highlight the section that has been selected (links are from the navigation bar)
  */
 const styleSelectedStateForSections = () => {
-  let sections = [ '#summary', '#featuredBlogs', '#subscribe', '#authorInfo' ];
-  for( let i=0; i<sections.length; i++ ) {
-    let sectionElement = document.querySelector( sections[i] );
+  for( let i=0; i<elementsInNavBar.length; i++ ) {
+    let sectionElement = document.querySelector( elementsInNavBar[i] );
     sectionElement.onmouseout = () => {
       sectionElement.style.backgroundColor = 'white';
       sectionElement.color = '#000';
@@ -94,5 +84,10 @@ const styleSelectedStateForSections = () => {
 };
 
 
-createDynamicNavbar();
-styleSelectedStateForSections();
+window.addEventListener('DOMContentLoaded', (event) => {
+  const t0 = performance.now();
+  createDynamicNavbar();
+  styleSelectedStateForSections();
+  const t1 = performance.now();
+  console.log( 'Page loaded in: ' + (t1-t0) );
+});
