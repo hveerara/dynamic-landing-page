@@ -1,0 +1,83 @@
+@import "./footer.css";
+@import "./globals.css";
+@import "./header.css";
+@import "./index-card.css";
+
+header {
+  background: url("../images/ikigai-scrabble.jpeg");
+  background-size: 200px;
+  height: 105px;
+}
+
+@media (min-width: 800px) {
+  #cardContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 100% auto;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100% auto;
+    width: 300px;
+    border: 1px #808080 solid;
+    border-radius: 3%;
+    margin: 10px;
+  }
+
+  #contentSubscribeForm {
+    padding: 30px;
+    width: 350px;
+    height: 250px;
+  }
+
+  #contentImage {
+    background: url("../images/subscribe.jpeg") no-repeat;
+    background-size: 1450px;
+    height: 400px;
+    padding: 20px;
+  }
+
+  .formElement {
+    padding: 10px;
+  }
+
+  #contentSubscribeForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    border: 1px #808080 solid;
+    border-radius: 3%;
+  }
+  
+  .formElement {
+    display: flex;
+    justify-content: left;
+    flex-direction: row;
+    padding: 5px;
+  }
+  
+  .formElementSpan {
+    padding: 2px;
+  }
+  
+  #formElementButton {
+    align-items: left;
+    padding: 10px;
+  }
+  
+  #subscribeBtn {
+    background: #a9a9a9;
+    color: #000;
+    font-weight: bold;
+    font-size: 15px;
+    width: 150px;
+    height: 50px;
+    border: 1px #a9a9a9 solid;
+    border-radius: 15%;
+  }
+}

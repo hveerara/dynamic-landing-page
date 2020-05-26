@@ -1,0 +1,14 @@
+header {
+  grid-area: hd;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  text-align: center;
+  background: rgba(128, 128, 128, 0.219);
+}
+
+#headerTitle {
+  font-size: 30px;
+  font-weight: bold;
+  padding: 10px;
+}
